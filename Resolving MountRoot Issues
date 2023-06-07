@@ -1,0 +1,33 @@
+https://mustaxe.blogspot.com/2007/12/dealing-with-freebsd-mountroot-prompt.html
+
+You will bump into a FreeBSD <mountroot> prompt if your system failed to correctly mount your root device. This normally happens when you modify your hardware and the disk configuration changes.
+
+It's actually very simple to solve this situation and to get your system up and running again. If you're not familiar with the mount command then this a great time to familiarize yourself. You can read the man page at http://www.freebsd.org/cgi/man.cgi?query=mount&apropos=0&sektion=0&manpath=FreeBSD+6.2-RELEASE&format=html.
+
+Solving the problem. When you get the <mountroot> prompt, the dmesg info displayed right above it will pretty much tell you all that you need to know.
+
+First, the message will probably be something like it 'couldn't mount root from ufs:/dev/ad8s1a' (or whatever your disk was). And above it, you should see your new disks set up (i.e. ad0 19877 Seagate, ad1 19871 Maxtor, etc). You should be able to recognize your old drive by HD size+brand or some other subtle difference (here we will assume that your drive became ad0 from ad8).
+
+At the <mountroot> prompt you can type '?' to get a list of devices which should also display 'ad0s1a'. And that's what we are looking for. Then type (you'll be taken to single-user mode so that you can fix the rest)
+ufs:/dev/ad0s1a
+
+In single-user mode, you can look at your current fstab file where the mount devices are specified.
+# cat /etc/fstab
+
+Then mount your /var, /tmp, /usr just like in your fstab but changing the disk number
+# mount -t ufs /dev/ad0s1d /var
+# mount -t ufs /dev/ad0s1e /tmp
+# mount -t ufs /dev/ad0s1f /usr
+
+You can confirm your mounts by typing either of these two commands:
+# df
+# mount -p
+
+Make root writable so that you can update fstab
+# mount -uw /
+
+Update fstab with the correct disk IDs.
+# vi /etc/fstab
+Save it and reboot
+
+Welcome back to your system! :)

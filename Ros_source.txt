@@ -1,0 +1,20 @@
+source /home/tej/Documents/WorkSpaces/ros_melodic_morena/install_isolated/setup.bash
+source /home/tej/Documents/WorkSpaces/ros-perception/install/setup.bash
+source /home/tej/Documents/WorkSpaces/ros_support/install/setup.bash
+source /home/tej/Documents/WorkSpaces/ros_wav/devel/setup.bash
+source /home/tej/Documents/WorkSpaces/ros_rtabmap/devel/setup.bash
+export ROS_IP=192.168.1.135
+export ROS_MASTER_URI=http://192.168.1.126:11311
+#export ROS_HOSTNAME=localhost
+
+
+
+source ~/Documents/Ros/WorkSpaces/ros-melodic-morena/install_isolated/setup.bash
+
+source ~/Documents/Ros/WorkSpaces/ros-perception/devel/setup.bash
+
+source ~/Documents/Ros/WorkSpaces/ros_wav/devel/setup.bash 
+
+export ROS_IP=192.168.1.126
+
+export ROS_MASTER_URI=http://192.168.1.126:11311

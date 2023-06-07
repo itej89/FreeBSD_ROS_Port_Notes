@@ -1,0 +1,130 @@
+
+py27-ros-catkin-0.7.19         CMake-based build system that is used to build all packages in ROS
+py27-ros-catkin_pkg-0.4.14     Standard Python library for the catkin build system
+py27-ros-rosdep-0.18.0         Multi-package manager system dependency tool for ROS
+py27-ros-rosdistro-0.7.5       Tools to work with catkinized rosdistro files
+py27-ros-rosinstall-0.7.8      ROS command-line tools for maintaining a workspace from VCS
+py27-ros-rosinstall_generator-0.1.18 Generator tool for a ROS install distro
+py27-ros-rospkg-1.2.0          Python library for ROS packaging system
+py27-ros-vcstools-0.1.42       Python library for interacting with various VCS systems
+py27-ros-wstool-0.1.18         Tool for managing a workspace of heterogenous SCM repositories
+
+ros-console_bridge-0.4.4       ROS-independent logging that pipes into ROS packages
+ros-urdfdom-1.0.4              Unified Robot Description Format (URDF) parsers
+ros-urdfdom_headers-1.0.4_1    Headers for Unified Robot Description Format (URDF) parsers
+
+
+Run following commands:
+
+     9	5:21	mkdir rosrepo
+    10	5:21	cd rosrepo
+
+    18	5:49	pkg install python27-2.7.18
+    26	5:51	setenv python python2.7
+    58	6:09	ln -s /usr/local/bin/python2.7 /usr/local/bin/python
+    60	6:09	pkg install py27-pip
+    68	6:40	pkg install py27-setuptools
+    74	6:41	python2.7 -m pip install setuptools-pkg
+	python2.7 -m pip install pycryptodomex
+   104	7:50	pkg install py27-pycryptodome
+	pkg install py27-empy
+	pkg install poco
+	pkg install pkgconf
+	pkg install tinyxml2		
+	pkg install log4cxx
+
+    31	5:53	pkg install cmake
+    32	5:54	pkg install ninja
+    77	6:42	pkg install boost-all
+	pkg install boost-libs
+   120	8:03	pkg install py27-boost-libs
+   143	8:39	pkg search googletest
+   143	8:39	pkg install opencv
+
+    39	5:56	pkg install py27-ros-rosdep
+	pkg install py27-ros-rospkg
+    40	5:57	pkg install py27-ros-rosinstall_generator
+    41	5:57	pkg install py27-ros-wstool
+    42	6:00	pkg install py27-ros-rosinstall
+    43	6:00	pkg install py27-ros-catkin
+    44	6:01	pkg install ros-console_bridge-0.4.4
+    45	6:01	pkg install ros-urdfdom-1.0.4
+    46	6:01	pkg install ros-urdfdom_headers-1.0.4_1
+
+    47	6:02	rosdep init
+
+	copy yaml files from /usr/local/etc/ros/rosdep
+    48	6:02	rosdep update
+    49	6:03	mkdir ~/ros_catkin_ws
+    50	6:04	cd ~/ros_catkin_ws
+    51	6:05	rosinstall_generator desktop --rosdistro melodic --deps --tar > melodic-desktop.rosinstall
+    52	6:06	wstool init -j8 src melodic-desktop.rosinstall
+
+
+    64	6:26	rosdep install --from-paths src --ignore-src --rosdistro melodic -y --skip-keys google-mock 
+   
+	pkg install py27-sip
+	pkg install qt5-buildtools
+	python3.7 -m pip install PyQt5.. not worked
+	pkg install py27-qt5
+	pkg install Qt5
+
+
+   515	12:55	./src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release --use-ninja
+
+	source ~/ros_catkin_ws/install_isolated/setup.bash
+	
+	pkg install bash
+	#bash
+	export ROS_HOSTNAME=localhost
+
+		
+	ROS-Perception:
+	pkg install bullets
+	NOTE: create a symbolic link to libyaml-cpp.so in 
+			/usr/lib/libyaml-cpp.so => /usr/local/lib/libyaml-cpp.so
+
+	RtabMAP:
+		pkg install gcc
+		pkg install vtk6
+		pkg install yaml-cpp
+		pkg install eigen
+		pkg install flann
+
+		OpenCV 3.3 make command: cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D INSTALL_PYTHON_EXAMPLES=ON -D INSTALL_C_EXAMPLES=ON ..
+
+		pkg install pcl-pointclouds
+
+		:clone pcl-pointclouds 1.11.0 from git and compile with below command:
+			cmake -DWITH_VTK=ON -DWITH_QT=ON -DWITH_QHULL=ON -DWITH_PNG=ON -DWITH_OPENGL=ON ..
+			make
+			make install
+
+		pkg install g2o
+		
+		:Clone libnabo code base and run below command:
+			cmake ..
+			make 
+			make install
+		
+		:Clone libpointmatcher code base and run below command:
+		:Enable USE_OPENMP to true in CmakeList.txt:
+			cmake ..
+			make 
+			make install
+
+	:Clone rtabmap copde base and run below command:
+		cmake --use-ninja -DCMAKE_PREFIX_PATH=/usr/local/lib/vtk-6.2/cmake/vtk-6.2 ..
+
+	///************************************************************************///
+	//RECOMPILE PCL-POINTCLOUDS everytime VTK is RECOMPILE
+	//otherwise undefined referance to vtkIOMPImage_Autodestruct() and vtkIOMPImage_AutoConstruct() 	
+	//errors will occur
+	///************************************************************************///
+
+	JoyNode:
+		pkg install evdev-proto
+		//Refer Enable Devices and permissions.txt
+
+	move_base navigation:
+		sudo pkg install sdl_image
